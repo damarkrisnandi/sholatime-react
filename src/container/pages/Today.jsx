@@ -9,7 +9,14 @@ export default class Today extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            jadwal: [],
+            jadwal: [
+                {name: 'IMSAK', time: '00:00'},
+                {name: 'SUBUH', time: '00:00'},
+                {name: 'DZUHUR', time: '00:00'},
+                {name: 'ASHAR', time: '00:00'},
+                {name: 'MAGHRIB', time: '00:00'},
+                {name: 'ISYA', time: '00:00'}
+            ],
             lokasi: '',
             lokasiId: '',
             timezoneOffset: 0,
@@ -33,8 +40,8 @@ export default class Today extends React.Component {
         return 7;
     }
 
-    updateState = async (lokasiId) => {
-        const data = await getJadwalSholatById(lokasiId, new Date()); 
+    updateState = async (lokasi) => {
+        const data = await getJadwalSholatById(lokasi.split('-')[0], new Date()); 
         
         
         this.setState({
@@ -56,11 +63,10 @@ export default class Today extends React.Component {
 
     async componentDidMount() {
         const cities = getAllLokasi();
-        const lok = getLokasi('jakarta');
         const data = getJadwalSholat('jakarta', new Date()); 
         
 
-        Promise.all([cities, lok, data]).then(([cities, lok, data]) => {
+        Promise.all([cities, data]).then(([cities, data]) => {
 
         
             this.setState({
@@ -72,8 +78,8 @@ export default class Today extends React.Component {
                     {name: 'MAGHRIB', time: data.data.jadwal.maghrib},
                     {name: 'ISYA', time: data.data.jadwal.isya}
                 ],
-                lokasi: lok.data[0].lokasi,
-                lokasiId: lok.data[0].id,
+                lokasi: data.data.lokasi,
+                lokasiId: data.data.id,
                 timezoneOffset: this.getTimezoneOffset(data.data.daerah),
                 listKota: cities,
                 
@@ -139,11 +145,11 @@ export default class Today extends React.Component {
             <Select 
             placeholder='Pilih Kota'
             onChange={(value) => this.handleChangeKota(value)}
-            value={this.state.lokasiId}
+            value={this.state.lokasiId+'-'+this.state.lokasi}
             >
                 {
                     this.state.listKota.map((kota) => (
-                        <option key={kota.id} value={kota.id} >{kota.lokasi}</option>
+                        <option key={kota.id} value={kota.id+'-'+kota.lokasi} >{kota.lokasi}</option>
                     ))
                 }
             </Select>

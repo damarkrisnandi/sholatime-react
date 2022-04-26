@@ -2,11 +2,7 @@ import { Box, Stat, StatLabel, StatNumber, StatHelpText } from "@chakra-ui/react
 import React from "react"
 
 export default function CountDown(props) {
-    const defaultTime = {hours: 0, minutes: 0, seconds: 0}; 
-    const setTimeEnd = React.useState(new Date())[1];
-    const [time, setTime] = React.useState(defaultTime);
-    let [isChange, setChange] = React.useState(false);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const count = (timeEnd) => {
         
         var x = setInterval(() => {
@@ -30,8 +26,14 @@ export default function CountDown(props) {
         }, 1000);
     }
 
+    const defaultTime = {hours: 0, minutes: 0, seconds: 0}; 
+    const setTimeEnd = React.useState(new Date())[1];
+    const [time, setTime] = React.useState(defaultTime);
+    let [isChange, setChange] = React.useState(false);
+
     React.useEffect(() => {
-        if (props.timeUntil) {
+        setChange(true);
+        if (props.timeUntil && isChange) {
             const time = props.timeUntil;
             const [h, m] = time.split(':');
             const date = new Date();
@@ -39,7 +41,7 @@ export default function CountDown(props) {
             count(date);
         } 
         return () => {}
-    })
+    }, [props.timeUntil, isChange, count])
 
     return (
         <Box maxW='6xl' borderWidth='2px' borderRadius='lg' overflow='auto' bg='teal.500' color='white'>   

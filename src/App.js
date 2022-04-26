@@ -4,7 +4,7 @@ import Main from './container/Main';
 
 function App() {
   return (
-      <div>
+      <div className="space">
         <Main />
       </div>
   );

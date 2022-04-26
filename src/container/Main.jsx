@@ -1,21 +1,23 @@
-import Today from './pages/Today';
-import Example from './pages/Example';
-
 import { BrowserRouter as Router, Route, NavLink , Routes} from 'react-router-dom';
-import { Grid, GridItem, Stack, Button } from '@chakra-ui/react';
-import React from 'react';
+import { Grid, GridItem, Stack, Button, Spinner, Center, Container } from '@chakra-ui/react';
+import React, { Suspense } from 'react';
+
+// import lazy
+const Today = React.lazy(() => import('./pages/Today'));
+const Example = React.lazy(() => import('./pages/Example'));
 
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             pathname: 'Today',
-            clicked: 0
+            clicked: 0,
+            comp: () => (<Today />)
         }
     }
     routes = [
-        {path: '/', name: 'Today', el: <Today />, id: 1},
-        {path: '/month', name: 'This Month', el: <Example />, id: 2},
+        {path: '/', name: 'Today', el: <Today />, id: 1, file: './pages/Today'},
+        {path: '/month', name: 'This Month', el: <Example />, id: 2, file: './pages/Example'},
     ];
     
     pathname = window.location.pathname;
@@ -26,10 +28,16 @@ export default class Main extends React.Component {
 
     handleChangePath = (value) => {
         this.setState({
-            pathname: value.target.innerHTML
+            pathname: value.target.innerHTML,
+            comp: () => (this.routes.find(d => d.name === value.target.innerHTML).el)
         })
     }
 
+    LoaderMain = () => (
+        <Center bg='teal.500' h='100px' color='white'>
+            <div>Sedang memuat...</div>
+        </Center>
+    )  
     render() {
         return (
         <Router>
@@ -40,26 +48,28 @@ export default class Main extends React.Component {
             gap={2}
             >
             <GridItem colSpan={1}>
-                <Stack direction='column' spacing={1} align='center'>
-                    {this.routes.map(route => (
-                        <NavLink  to={route.path} key={route.id}>
-                            <Button 
-                            key={route.name} 
-                            colorScheme='teal' 
-                            variant={ this.state.pathname === route.name  ? 'solid' : 'ghost'} 
-                            w={'2xs'}
-                            value={route.id}
-                            onClick={(value) => this.handleChangePath(value)}
-                            >
-                            {route.name}
-                            </Button>
-                        </NavLink>
-                    ))}
-                    
-                </Stack>
+                <Container>
+                    <Stack direction='column' spacing={1} align='center'>
+                        {this.routes.map(route => (
+                            <NavLink  to={route.path} key={route.id}>
+                                <Button 
+                                key={route.name} 
+                                colorScheme='teal' 
+                                variant={ this.state.pathname === route.name  ? 'solid' : 'ghost'} 
+                                w={'2xs'}
+                                value={route.id}
+                                onClick={(value) => this.handleChangePath(value)}
+                                >
+                                {route.name}
+                                </Button>
+                            </NavLink>
+                        ))}
+                        
+                    </Stack>
+                </Container>
             </GridItem>
             <GridItem colSpan={4}>
-            
+            <Suspense fallback={<this.LoaderMain />}>
                 {/* <Today /> */}
                 <Routes>
                 {
@@ -71,7 +81,7 @@ export default class Main extends React.Component {
                 <Route path="/today" element={<Today />}/>
                 <Route path="/example" element={<Example />} /> */}
                 </Routes>
-            
+            </Suspense>
             </GridItem>
             </Grid>
           </Router>
