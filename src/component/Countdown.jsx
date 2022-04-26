@@ -38,6 +38,7 @@ export default function CountDown(props) {
             const [h, m] = time.split(':');
             const date = new Date();
             date.setHours(parseInt(h), parseInt(m), 0, 0);
+            
             count(date);
         } 
         return () => {}
@@ -49,7 +50,7 @@ export default function CountDown(props) {
                 <Stat>
                     <StatLabel key={props.name}>{'Next >> ' + props.name}</StatLabel>
                     <StatNumber fontSize={'6xl'}>{time.hours <= 9 ? '0' : '' }{time.hours}:{time.minutes <= 9 ? '0' : '' }{time.minutes}:{time.seconds <= 9 ? '0' : '' }{time.seconds}</StatNumber>
-                    <StatHelpText>{props.name + ' ' + props.timeUntil} (GMT + {props.timezoneOffset})</StatHelpText>
+                    <StatHelpText>{props.name + ' ' + props.timeUntil} (GMT + {props.timezoneOffset}) || LOCAL TIMEZONE: GMT + {0 - (new Date().getTimezoneOffset() / 60)}</StatHelpText>
                 </Stat>
             </Box>
         </Box>

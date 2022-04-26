@@ -7,7 +7,7 @@ function Feature(props) {
             <Stat>
                 <StatLabel>{props.name}</StatLabel>
                 <StatNumber>{props.time}</StatNumber>
-                <StatHelpText>GMT + {props.timezoneOffset}</StatHelpText>
+                {/* <StatHelpText>GMT + {props.timezoneOffset}</StatHelpText> */}
             </Stat>
         </Box>
       </Box>

@@ -34,7 +34,7 @@ export default class Main extends React.Component {
     }
 
     LoaderMain = () => (
-        <Center bg='teal.500' h='100px' color='white'>
+        <Center h='1vh'>
             <div>Sedang memuat...</div>
         </Center>
     )  

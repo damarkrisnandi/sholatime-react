@@ -61,14 +61,11 @@ export default class Today extends React.Component {
         })
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const cities = getAllLokasi();
         const data = getJadwalSholat('jakarta', new Date()); 
         
-
         Promise.all([cities, data]).then(([cities, data]) => {
-
-        
             this.setState({
                 jadwal: [
                     {name: 'IMSAK', time: data.data.jadwal.imsak},
@@ -141,7 +138,7 @@ export default class Today extends React.Component {
 
     render() {
         return (
-        <Container maxW='container.lg' color='#262626' height='500px'>
+        <div>
             <Select 
             placeholder='Pilih Kota'
             onChange={(value) => this.handleChangeKota(value)}
@@ -174,7 +171,7 @@ export default class Today extends React.Component {
             </Grid>
 
             
-            </Container>
+            </div>
         )
     }
 }
