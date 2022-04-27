@@ -1,4 +1,4 @@
-import { Box, Stat, StatLabel, StatNumber, StatHelpText } from "@chakra-ui/react"
+import { Box, Stat, StatLabel, StatNumber } from "@chakra-ui/react"
 
 function Feature(props) {
     return (

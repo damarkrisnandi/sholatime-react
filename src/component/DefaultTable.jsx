@@ -35,8 +35,8 @@ export function DefaultTable(props) {
                                             
                                                 <Td 
                                                 key={col.field} 
-                                                bg={props.list[date.getDate() - 1].date == data.date ? 'teal.100' : ''}
-                                                fontWeight={props.list[date.getDate() - 1].date == data.date ? 'bold' : ''}
+                                                bg={props.list[date.getDate() - 1].date === data.date ? 'teal.100' : ''}
+                                                fontWeight={props.list[date.getDate() - 1].date === data.date ? 'bold' : ''}
                                                 >
                                                     {data[col.field]}
                                                 </Td>

@@ -45,7 +45,7 @@ export default function CountDown(props) {
             count(date);
         } 
         return () => {}
-    }, [props.timeUntil, isChange, count])
+    }, [props.timeUntil, isChange, count, props.isNextDay])
 
     return (
         <Box maxW='6xl' borderWidth='2px' borderRadius='lg' overflow='auto' bg='teal.500' color='white'>   

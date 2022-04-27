@@ -1,7 +1,7 @@
 import React from "react";
 import Feature from "../../component/Feature";
-import { getAllLokasi, getJadwalSholat, getLokasi, getJadwalSholatById } from "../../utils/service";
-import { Container, Grid, Select } from "@chakra-ui/react";
+import { getAllLokasi, getJadwalSholat, getJadwalSholatById } from "../../utils/service";
+import { Grid, Select } from "@chakra-ui/react";
 import ConstantUtils from "../../utils/constants";
 import CountDown from "../../component/Countdown";
 
