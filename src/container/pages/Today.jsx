@@ -23,7 +23,8 @@ export default class Today extends React.Component {
             listKota: [],
 
             nextName: '',
-            nextTime: null
+            nextTime: null,
+            isNextDay: false
         }
     }
 
@@ -63,7 +64,7 @@ export default class Today extends React.Component {
 
     componentDidMount() {
         const cities = getAllLokasi();
-        const data = getJadwalSholat('jakarta', new Date()); 
+        const data = getJadwalSholat('banyumas', new Date()); 
         
         Promise.all([cities, data]).then(([cities, data]) => {
             this.setState({
@@ -116,23 +117,22 @@ export default class Today extends React.Component {
             })
         } else {
             const tomorrow = new Date(new Date().getTime() + 86400000);
-            const data = getJadwalSholatById(this.state.lokasiId, tomorrow);
-            this.setState({
-                jadwal: [
-                    {name: 'IMSAK', time: data.data.jadwal.imsak},
-                    {name: 'SUBUH', time: data.data.jadwal.subuh},
-                    {name: 'DZUHUR', time: data.data.jadwal.dzuhur},
-                    {name: 'ASHAR', time: data.data.jadwal.ashar},
-                    {name: 'MAGHRIB', time: data.data.jadwal.maghrib},
-                    {name: 'ISYA', time: data.data.jadwal.isya}
-                ],
-                timezoneOffset: this.getTimezoneOffset(data.data.daerah),
-                nextName:'IMSAK',
-                nextTime: data.data.jadwal.imsak
+            getJadwalSholatById(this.state.lokasiId, tomorrow).then(data => {
+                this.setState({
+                    jadwal: [
+                        {name: 'IMSAK', time: data.data.jadwal.imsak},
+                        {name: 'SUBUH', time: data.data.jadwal.subuh},
+                        {name: 'DZUHUR', time: data.data.jadwal.dzuhur},
+                        {name: 'ASHAR', time: data.data.jadwal.ashar},
+                        {name: 'MAGHRIB', time: data.data.jadwal.maghrib},
+                        {name: 'ISYA', time: data.data.jadwal.isya}
+                    ],
+                    timezoneOffset: this.getTimezoneOffset(data.data.daerah),
+                    nextName:'IMSAK',
+                    nextTime: data.data.jadwal.imsak,
+                    isNextDay: true
+                })
             })
-
-            if (isNewJadwal) {
-            }
         }
     }
 
@@ -156,10 +156,7 @@ export default class Today extends React.Component {
             name={this.state.nextName} 
             timeUntil={this.state.nextTime} 
             timezoneOffset={this.state.timezoneOffset}
-            
-            
-            
-            
+            isNextDay={this.state.isNextDay}
             onFinishTimer={(value) => this.handleFinishTimer(value)}/>
             {/* <Text fontSize='3xl'>{this.state.lokasi}</Text> */}
             <Grid templateColumns={'repeat(' + this.state.jadwal.length + ', 1fr)'} gap={1}>

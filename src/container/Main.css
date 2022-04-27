@@ -1,0 +1,10 @@
+.scroll-inside {
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* max-height: 100vh; */
+    height: 100vh;
+}
+
+.hide-scroll {
+    overflow-y: hidden;
+}

@@ -36,7 +36,10 @@ export default function CountDown(props) {
         if (props.timeUntil && isChange) {
             const time = props.timeUntil;
             const [h, m] = time.split(':');
-            const date = new Date();
+            let date = new Date();
+            if (props.isNextDay) {
+                date = new Date(new Date().getTime() + 86400000);
+            }
             date.setHours(parseInt(h), parseInt(m), 0, 0);
             
             count(date);

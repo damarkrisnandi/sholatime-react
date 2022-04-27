@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, NavLink , Routes} from 'react-router-dom';
-import { Grid, GridItem, Stack, Button, Spinner, Center, Container } from '@chakra-ui/react';
+import { Grid, GridItem, Stack, Button, Center, Container } from '@chakra-ui/react';
 import React, { Suspense } from 'react';
+import './Main.css';
 
 // import lazy
 const Today = React.lazy(() => import('./pages/Today'));
-const Example = React.lazy(() => import('./pages/Example'));
+const Monthly = React.lazy(() => import('./pages/Monthly'));
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -16,8 +17,8 @@ export default class Main extends React.Component {
         }
     }
     routes = [
-        {path: '/', name: 'Today', el: <Today />, id: 1, file: './pages/Today'},
-        {path: '/month', name: 'This Month', el: <Example />, id: 2, file: './pages/Example'},
+        {path: '/', name: 'Today', el: <Today />, id: 1},
+        {path: '/month', name: 'This Month', el: <Monthly />, id: 2},
     ];
     
     pathname = window.location.pathname;
@@ -42,10 +43,11 @@ export default class Main extends React.Component {
         return (
         <Router>
             <Grid
-            h='200px'
+            h='100vh'
             templateRows='repeat(2, 1fr)'
             templateColumns='repeat(5, 1fr)'
             gap={2}
+            className={'hide-scroll'}
             >
             <GridItem colSpan={1}>
                 <Container>
@@ -68,20 +70,18 @@ export default class Main extends React.Component {
                     </Stack>
                 </Container>
             </GridItem>
-            <GridItem colSpan={4}>
+            <GridItem colSpan={4} h={'100vh'}>
+            <div className='scroll-inside'>
             <Suspense fallback={<this.LoaderMain />}>
-                {/* <Today /> */}
                 <Routes>
                 {
                     this.routes.map(route => (
                     <Route path={route.path} element={route.el} key={route.id}/>
                     ))
                 }
-                {/* <Route path="/" exact element={<Today />}/>
-                <Route path="/today" element={<Today />}/>
-                <Route path="/example" element={<Example />} /> */}
                 </Routes>
             </Suspense>
+            </div>
             </GridItem>
             </Grid>
           </Router>
