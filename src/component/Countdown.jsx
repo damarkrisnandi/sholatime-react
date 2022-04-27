@@ -20,14 +20,12 @@ export default function CountDown(props) {
             else {
                 setChange(false);
                 setTime({hours, minutes, seconds})
-                setTimeEnd(props.timeUntil)
                 
             }
         }, 1000);
     }
 
-    const defaultTime = {hours: 0, minutes: 0, seconds: 0}; 
-    const setTimeEnd = React.useState(new Date())[1];
+    const defaultTime = {hours: 0, minutes: 0, seconds: 0};
     const [time, setTime] = React.useState(defaultTime);
     let [isChange, setChange] = React.useState(false);
 
@@ -41,7 +39,6 @@ export default function CountDown(props) {
                 date = new Date(new Date().getTime() + 86400000);
             }
             date.setHours(parseInt(h), parseInt(m), 0, 0);
-            
             count(date);
         } 
         return () => {}
