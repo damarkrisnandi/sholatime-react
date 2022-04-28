@@ -7,9 +7,9 @@ export function DefaultTable(props) {
             <Table size='sm' maxH={'500px'}>
                 
                 <Thead>
-                    <Tr>
+                    <Tr >
                         {props.column.map(col => (
-                            <Th key={col.header}>{col.header}</Th>    
+                            <Th color={'whiteAlpha.700'} key={col.header}>{col.header}</Th>    
                         ))}
                     </Tr>
                 </Thead>
@@ -21,7 +21,7 @@ export function DefaultTable(props) {
                             <Tr>
                                 <Td colSpan={props.column.length}>
                                     <Center h='100px' w={'4xl'}>
-                                        <Spinner color='red.500' />
+                                        <Spinner color='white' />
                                     </Center>
                                 </Td>
                             </Tr>
@@ -35,7 +35,7 @@ export function DefaultTable(props) {
                                             
                                                 <Td 
                                                 key={col.field} 
-                                                bg={props.list[date.getDate() - 1].date === data.date ? 'teal.100' : ''}
+                                                bg={props.list[date.getDate() - 1].date === data.date ? 'teal.900' : ''}
                                                 fontWeight={props.list[date.getDate() - 1].date === data.date ? 'bold' : ''}
                                                 >
                                                     {data[col.field]}
@@ -54,7 +54,7 @@ export function DefaultTable(props) {
                 <Tfoot>
                     <Tr>
                         {props.column.map(col => (
-                            <Th key={col.header}>{col.header}</Th>    
+                            <Th color={'whiteAlpha.700'} key={col.header}>{col.header}</Th>    
                         ))}
                     </Tr>
                 </Tfoot>

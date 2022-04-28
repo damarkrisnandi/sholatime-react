@@ -1,13 +1,11 @@
 import { BrowserRouter as Router, Route, NavLink , Routes} from 'react-router-dom';
-import { Grid, GridItem, Stack, Button, Center, Container } from '@chakra-ui/react';
+import { Grid, GridItem, Stack, Button, Container } from '@chakra-ui/react';
 import React, { Suspense } from 'react';
 import './Main.css';
 
 // import lazy
 const Today = React.lazy(() => import('./pages/Today'));
 const Monthly = React.lazy(() => import('./pages/Monthly'));
-// import Today from './pages/Today';
-// import Monthly from './pages/Monthly';
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -34,7 +32,14 @@ export default class Main extends React.Component {
 
     LoaderMain = () => (
         <div>Sedang memuat...</div>
-    )  
+    )
+    
+    componentDidMount() {
+        this.pathname = window.location.pathname;
+        if (this.pathname !== '/') {
+            this.setState({pathname: 'This Month'})
+        }
+    }
     render() {
         return (
         <Router>

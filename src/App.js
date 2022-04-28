@@ -3,11 +3,6 @@ import './App.css';
 import Main from './container/Main';
 import GlobalProvider from './context/context';
 
-function App() {
-  return (
-      <Main />
-      
-  );
-}
+const App = () => ( <Main />)
 
 export default GlobalProvider(App);

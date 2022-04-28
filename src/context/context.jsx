@@ -1,4 +1,5 @@
 import React, {createContext} from "react";
+import ConstantUtils from "../utils/constants";
 import { getJadwalSholatById } from "../utils/service";
 
 const RootContext = createContext();
@@ -23,6 +24,19 @@ const GlobalProvider = (Children) => {
                     {name: 'MAGHRIB', time: '00:00'},
                     {name: 'ISYA', time: '00:00'}
                 ],
+            }
+
+            getTimezoneOffset = (region) => {
+                const constants = new ConstantUtils();
+                if (constants.WIB.includes(region)) {
+                    return 7;
+                } else if (constants.WITA.includes(region)) {
+                    return 8;
+                } else if (constants.WIT.includes(region)) {
+                    return 9;
+                }
+        
+                return 7;
             }
 
             setNextSholat = () => {
@@ -70,6 +84,10 @@ const GlobalProvider = (Children) => {
 
                 if (action.type === 'SET_NEXT_SHOLAT') {
                     this.setNextSholat()
+                }
+
+                if (action.type === 'SET_TIMEZONE_OFFSET') {
+                    this.setState({timezoneOffset: this.getTimezoneOffset(action.region)})
                 }
             }
             render() {

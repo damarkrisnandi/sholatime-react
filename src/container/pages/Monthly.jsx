@@ -3,6 +3,7 @@ import { getJadwalSholatMonthlyById } from "../../utils/service";
 import { DefaultTable } from "../../component/DefaultTable";
 import { GlobalConsumer } from "../../context/context";
 import './Monthly.css';
+import { Box, Text } from "@chakra-ui/react";
 
 class Monthly extends React.Component {
     column = [
@@ -25,21 +26,23 @@ class Monthly extends React.Component {
         // const cities = getAllLokasi();
         Promise.all([data ]).then(([data]) => {
             this.setState({jadwalList: data.data.jadwal});
-            console.log(this.state.jadwalList);
         })
     }
 
     render() {
         return (
             <div className="height-view">
-                <h1>Jadwal Imsakiyyat Wilayah {this.props.state.lokasi} dan Sekitarnya</h1>
-                <div>
-                <DefaultTable 
-                column={this.column}
-                list={this.state.jadwalList}
-                
-                />
-                </div>
+                <Box p={'2'}>
+                    <Box maxW='6xl' borderRadius='lg' overflow='auto' bg='teal.500' color='white'>   
+                        <Box p='6'>
+                            <Text fontSize='2xl'>Jadwal Imsakiyyah Wilayah {this.props.state.lokasi} dan Sekitarnya</Text>
+                            <DefaultTable 
+                            column={this.column}
+                            list={this.state.jadwalList}
+                            />
+                        </Box>
+                    </Box>
+                </Box>
             </div>
         )
     }
