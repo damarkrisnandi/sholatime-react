@@ -1,13 +1,13 @@
 // import logo from './logo.svg';
 import './App.css';
 import Main from './container/Main';
+import GlobalProvider from './context/context';
 
 function App() {
   return (
-      <div>
-        <Main />
-      </div>
+      <Main />
+      
   );
 }
 
-export default App;
+export default GlobalProvider(App);

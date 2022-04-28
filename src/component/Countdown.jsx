@@ -1,7 +1,8 @@
 import { Box, Stat, StatLabel, StatNumber, StatHelpText } from "@chakra-ui/react"
 import React from "react"
+import { GlobalConsumer } from "../context/context";
 
-export default function CountDown(props) {
+function CountDown(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const count = (timeEnd) => {
         
@@ -15,7 +16,7 @@ export default function CountDown(props) {
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             if (distance < 0) {
-                props.onFinishTimer(true);
+                props.dispatch({type: 'SET_NEXT_SHOLAT'});
             }
             else {
                 setChange(false);
@@ -31,28 +32,30 @@ export default function CountDown(props) {
 
     React.useEffect(() => {
         setChange(true);
-        if (props.timeUntil && isChange) {
-            const time = props.timeUntil;
+        if (props.state.nextTime && isChange) {
+            const time = props.state.nextTime;
             const [h, m] = time.split(':');
             let date = new Date();
-            if (props.isNextDay) {
+            if (props.state.isNextDay) {
                 date = new Date(new Date().getTime() + 86400000);
             }
             date.setHours(parseInt(h), parseInt(m), 0, 0);
             count(date);
         } 
         return () => {}
-    }, [props.timeUntil, isChange, count, props.isNextDay])
+    }, [props.state.nextDay, isChange, count, props.isNextDay, props.state.nextTime, props.state.isNextDay])
 
     return (
         <Box maxW='6xl' borderWidth='2px' borderRadius='lg' overflow='auto' bg='teal.500' color='white'>   
             <Box p='6'>
                 <Stat>
-                    <StatLabel key={props.name}>{'Next >> ' + props.name}</StatLabel>
+                    <StatLabel key={props.state.nextName}>{'Next >> ' + props.state.nextName}</StatLabel>
                     <StatNumber fontSize={'6xl'}>{time.hours <= 9 ? '0' : '' }{time.hours}:{time.minutes <= 9 ? '0' : '' }{time.minutes}:{time.seconds <= 9 ? '0' : '' }{time.seconds}</StatNumber>
-                    <StatHelpText>{props.name + ' ' + props.timeUntil} (GMT + {props.timezoneOffset}) || LOCAL TIMEZONE: GMT + {0 - (new Date().getTimezoneOffset() / 60)}</StatHelpText>
+                    <StatHelpText>{props.state.nextName + ' ' + props.state.nextTime} (GMT + {props.state.timezoneOffset}) || LOCAL TIMEZONE: GMT + {0 - (new Date().getTimezoneOffset() / 60)}</StatHelpText>
                 </Stat>
             </Box>
         </Box>
     )
 }
+
+export default GlobalConsumer(CountDown);

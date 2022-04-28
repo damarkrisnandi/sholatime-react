@@ -6,6 +6,8 @@ import './Main.css';
 // import lazy
 const Today = React.lazy(() => import('./pages/Today'));
 const Monthly = React.lazy(() => import('./pages/Monthly'));
+// import Today from './pages/Today';
+// import Monthly from './pages/Monthly';
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -23,10 +25,6 @@ export default class Main extends React.Component {
     
     pathname = window.location.pathname;
 
-    // componentDidMount() {
-    //     this.handleChangePath();
-    // }
-
     handleChangePath = (value) => {
         this.setState({
             pathname: value.target.innerHTML,
@@ -35,19 +33,15 @@ export default class Main extends React.Component {
     }
 
     LoaderMain = () => (
-        <Center h='1vh'>
-            <div>Sedang memuat...</div>
-        </Center>
+        <div>Sedang memuat...</div>
     )  
     render() {
         return (
         <Router>
             <Grid
-            h='100vh'
-            templateRows='repeat(2, 1fr)'
+            templateRows='repeat(1, 1fr)'
             templateColumns='repeat(5, 1fr)'
             gap={2}
-            className={'hide-scroll'}
             >
             <GridItem colSpan={1}>
                 <Container>
@@ -70,8 +64,8 @@ export default class Main extends React.Component {
                     </Stack>
                 </Container>
             </GridItem>
-            <GridItem colSpan={4} h={'100vh'}>
-            <div className='scroll-inside'>
+            <GridItem colSpan={4} maxH={'100vh'} overflowY={'hidden'}>
+            <div>
             <Suspense fallback={<this.LoaderMain />}>
                 <Routes>
                 {

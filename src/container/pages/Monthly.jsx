@@ -1,8 +1,10 @@
 import React from "react";
-import { getAllLokasi, getJadwalSholatMonthly } from "../../utils/service";
+import { getJadwalSholatMonthlyById } from "../../utils/service";
 import { DefaultTable } from "../../component/DefaultTable";
+import { GlobalConsumer } from "../../context/context";
+import './Monthly.css';
 
-export default class Monthly extends React.Component {
+class Monthly extends React.Component {
     column = [
         {header: 'Tanggal', field: 'tanggal'},
         {header: 'Imsak', field: 'imsak'},
@@ -19,10 +21,9 @@ export default class Monthly extends React.Component {
         }
     }
     componentDidMount() {
-        const data = getJadwalSholatMonthly('banyumas', new Date());
-        const cities = getAllLokasi();
-        Promise.all([data, cities]).then(([data, cities]) => {
-            console.log('good')
+        const data = getJadwalSholatMonthlyById(this.props.state.lokasiId, new Date());
+        // const cities = getAllLokasi();
+        Promise.all([data ]).then(([data]) => {
             this.setState({jadwalList: data.data.jadwal});
             console.log(this.state.jadwalList);
         })
@@ -30,12 +31,18 @@ export default class Monthly extends React.Component {
 
     render() {
         return (
-            <div>
-            <DefaultTable 
-            column={this.column}
-            list={this.state.jadwalList}
-            />
+            <div className="height-view">
+                <h1>Jadwal Imsakiyyat Wilayah {this.props.state.lokasi} dan Sekitarnya</h1>
+                <div>
+                <DefaultTable 
+                column={this.column}
+                list={this.state.jadwalList}
+                
+                />
+                </div>
             </div>
         )
     }
 }
+
+export default GlobalConsumer(Monthly);

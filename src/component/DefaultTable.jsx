@@ -3,8 +3,8 @@ import './DefaultTable.css';
 export function DefaultTable(props) {
     return (
         <TableContainer>
-            <div className="scroll-inside">
-            <Table size='sm'>
+            <div>
+            <Table size='sm' maxH={'500px'}>
                 
                 <Thead>
                     <Tr>
