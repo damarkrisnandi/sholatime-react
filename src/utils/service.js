@@ -1,4 +1,4 @@
-const URL_API = 'https://api.myquran.com/v1';
+const URL_API = 'https://api.myquran.com/v2';
 const headers = {'Content-Type': 'application/json'};
 
 const URL_API_SHOLAT = `${URL_API}/sholat`;
